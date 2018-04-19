@@ -1,19 +1,132 @@
-import React, { Component } from 'react';
-import logo from '../logo.svg';
-import '../App.css';
+import React, { Component } from 'react'
+import styled, { ThemeProvider } from 'styled-components'
 
 class App extends Component {
-  render() {
+
+    state = {
+        activeState: 'active',
+        rooms:['Room 1','Room 2','Room 3','Room 4'],
+        adult:[1,2],
+        children:[0,1,2]
+    }
+
+    render() {
+        const theme = {
+            active: {
+                primary:'#FFF',
+                header:'#E6E6E6',
+                border:'1px solid #E6E6E6'
+            },
+            inactive: {
+                primary:'#DBDBE3',
+                header:'#DBDBE3',
+                border:'1px solid #CBCFDB'
+            }
+         }
+
+         const activeFlag = this.state.activeState
+
+         const Container = styled.div`
+            padding: 20px 0 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+         `;
+
+        const Box = styled.div`
+            width: 200px;
+            height: 165px; 
+            margin: 0 5px 5px 0; 
+            border-radius: 5px; 
+            border: ${props => props.theme[activeFlag].border}
+            background: ${props => props.theme[activeFlag].primary}
+        `;
+
+        const BoxHeader = styled.div`
+            display: flex;
+            align-items: center;
+            font-size: .9em;
+            height: 20%;
+            padding-left: 5px;
+            background: ${props => props.theme[activeFlag].header}
+        `;
+
+        const CheckBox = styled.input.attrs({
+            type: 'checkbox'
+        })`
+            margin-right: 5px;
+        `;
+
+        const OptionsContainer = styled.div`
+            width: 100%;
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        `;
+
+        //figure out how to remove margin from h4 last-of-type
+        const AgeFilter = styled.div`
+            text-align: center;
+            h4,h5{
+                margin: 0 10px;
+                padding-bottom: 5px;
+            }
+        `;
+
+        //selectors
+        const Selector = styled.select``;
+        const Option = styled.option``;
+
+        //submit
+        const ButtonContainer = styled.div``;
+        const Button = styled.button`
+            background: #C0C0C0;
+            padding: 5px 10px;
+            margin: 20px 0 0 20px;
+            &:hover{
+                cursor: pointer;
+            }
+        `;
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+    <ThemeProvider theme={theme}>
+        <div>
+            <Container>
+                {this.state.rooms.map((room, i) => {
+                    return <Box>
+                        <BoxHeader>
+                            { [i] = 0 ? [room]: <CheckBox/> + ' ' + [room] }
+                        </BoxHeader>
+                        <OptionsContainer>
+                            <AgeFilter>
+                                <h4>Adults</h4>
+                                <h5>(18+)</h5>
+                                <Selector state={activeFlag}>
+                                    {this.state.adult.map(count => {
+                                       return <Option>{count}</Option>
+                                    })}
+                                </Selector>
+                            </AgeFilter>
+                            <AgeFilter>
+                                <h4>Children</h4>
+                                <h5>(0-17)</h5>
+                                <Selector state={activeFlag}>
+                                    {this.state.children.map(count => {
+                                        return <Option>{count}</Option>
+                                    })}
+                                </Selector>
+                            </AgeFilter>
+                        </OptionsContainer>
+                    </Box>
+                })}
+            </Container>
+            <ButtonContainer>
+                <Button>
+                    Submit
+                </Button>
+            </ButtonContainer>
+        </div>
+    </ThemeProvider>
     );
   }
 }
