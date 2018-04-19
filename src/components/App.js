@@ -5,7 +5,22 @@ class App extends Component {
 
     state = {
         activeState: 'active',
-        rooms:['Room 1','Room 2','Room 3','Room 4'],
+        rooms:[{
+                name:'Room 1',
+                status:''
+            },
+            {
+                name:'Room 2',
+                status:'inactive'
+            },
+            {
+                name:'Room 3',
+                status:'active'
+            },
+            {
+                name:'Room 4',
+                status:'inactive'
+            }],
         adult:[1,2],
         children:[0,1,2]
     }
@@ -50,6 +65,7 @@ class App extends Component {
             background: ${props => props.theme[activeFlag].header}
         `;
 
+        //figure out checkbox color
         const CheckBox = styled.input.attrs({
             type: 'checkbox'
         })`
@@ -95,13 +111,18 @@ class App extends Component {
                 {this.state.rooms.map((room, i) => {
                     return <Box>
                         <BoxHeader>
-                            { [i] = 0 ? [room]: <CheckBox/> + ' ' + [room] }
+                            {(i !== 0) ?
+                                <div>
+                                    <CheckBox/>
+                                    {room.name}
+                                 </div> : room.name
+                            }
                         </BoxHeader>
                         <OptionsContainer>
                             <AgeFilter>
                                 <h4>Adults</h4>
                                 <h5>(18+)</h5>
-                                <Selector state={activeFlag}>
+                                <Selector {...room.status}>
                                     {this.state.adult.map(count => {
                                        return <Option>{count}</Option>
                                     })}
