@@ -10,36 +10,37 @@ class App extends Component {
                 {
                     name:'Room 1',
                     status:'active',
-                    checked:[]
+                    checked:true
                 },
                 {
                     name:'Room 2',
                     status:'inactive',
-                    checked:[]
+                    checked:true
                 },
                 {
                     name:'Room 3',
                     status:'inactive',
-                    checked:[]
+                    checked:true
                 },
                 {
                     name:'Room 4',
                     status:'inactive',
-                    checked:[]
+                    checked:true
                 }],
+            checked:false,
             adult:[1,2],
             children:[0,1,2]
         }
     }
 
-    toggleChecked = (i,room) => {
-        let check = 'check_' + i;
-        let box = 'box_' + i
+    toggleChecked = (i) => {
+        let check = 'check_' + i
         this.refs[check].checked = !this.refs[check].checked
-        this.refs[box].checked = this.refs[check].checked
-        //** work on after repo update this.refs[box].checked ?
-        console.log(this.refs[box].checked)
+        console.log(this.refs[check].checked)
     }
+
+
+
 
     render() {
         const theme = {
@@ -81,7 +82,8 @@ class App extends Component {
 
         //figure out checkbox color
         const CheckBox = styled.input.attrs({
-            type: 'checkbox'
+            type: 'checkbox',
+            class: 'radio'
         })`
             margin: 0 5px 0 0;
         `;
@@ -127,12 +129,13 @@ class App extends Component {
                 {this.state.rooms.map((room, i) =>
                 <Box ref={'box_'+i}>
                     <BoxHeader>
-
                         {(i !== 0) ?
                             <div>
                                 <CheckBox
                                     ref={'check_'+i}
-                                    onClick={()=>this.toggleChecked(i,room.checked)}
+                                    onChange={() =>
+                                        this.toggleChecked(i)
+                                    }
                                 />
                                 {room.name}
                              </div> : room.name}
