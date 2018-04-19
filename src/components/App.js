@@ -2,27 +2,43 @@ import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeState: 'inactive',
+            rooms:[
+                {
+                    name:'Room 1',
+                    status:'active',
+                    checked:[]
+                },
+                {
+                    name:'Room 2',
+                    status:'inactive',
+                    checked:[]
+                },
+                {
+                    name:'Room 3',
+                    status:'inactive',
+                    checked:[]
+                },
+                {
+                    name:'Room 4',
+                    status:'inactive',
+                    checked:[]
+                }],
+            adult:[1,2],
+            children:[0,1,2]
+        }
+    }
 
-    state = {
-        activeState: 'active',
-        rooms:[{
-                name:'Room 1',
-                status:''
-            },
-            {
-                name:'Room 2',
-                status:'inactive'
-            },
-            {
-                name:'Room 3',
-                status:'active'
-            },
-            {
-                name:'Room 4',
-                status:'inactive'
-            }],
-        adult:[1,2],
-        children:[0,1,2]
+    toggleChecked = (i,room) => {
+        let check = 'check_' + i;
+        let box = 'box_' + i
+        this.refs[check].checked = !this.refs[check].checked
+        this.refs[box].checked = this.refs[check].checked
+        //** work on after repo update this.refs[box].checked ?
+        console.log(this.refs[box].checked)
     }
 
     render() {
@@ -39,8 +55,6 @@ class App extends Component {
             }
          }
 
-         const activeFlag = this.state.activeState
-
          const Container = styled.div`
             padding: 20px 0 0 20px;
             display: flex;
@@ -52,8 +66,8 @@ class App extends Component {
             height: 165px; 
             margin: 0 5px 5px 0; 
             border-radius: 5px; 
-            border: ${props => props.theme[activeFlag].border}
-            background: ${props => props.theme[activeFlag].primary}
+            border: ${props => props.theme.active.border};
+            background: ${props => props.theme.active.primary}
         `;
 
         const BoxHeader = styled.div`
@@ -62,14 +76,14 @@ class App extends Component {
             font-size: .9em;
             height: 20%;
             padding-left: 5px;
-            background: ${props => props.theme[activeFlag].header}
+            background: ${props => props.theme.active.header}
         `;
 
         //figure out checkbox color
         const CheckBox = styled.input.attrs({
             type: 'checkbox'
         })`
-            margin-right: 5px;
+            margin: 0 5px 0 0;
         `;
 
         const OptionsContainer = styled.div`
@@ -95,7 +109,9 @@ class App extends Component {
 
         //submit
         const ButtonContainer = styled.div``;
-        const Button = styled.button`
+        const Button = styled.button.attrs({
+            type: 'submit'
+        })`
             background: #C0C0C0;
             padding: 5px 10px;
             margin: 20px 0 0 20px;
@@ -108,38 +124,41 @@ class App extends Component {
     <ThemeProvider theme={theme}>
         <div>
             <Container>
-                {this.state.rooms.map((room, i) => {
-                    return <Box>
-                        <BoxHeader>
-                            {(i !== 0) ?
-                                <div>
-                                    <CheckBox/>
-                                    {room.name}
-                                 </div> : room.name
-                            }
-                        </BoxHeader>
-                        <OptionsContainer>
-                            <AgeFilter>
-                                <h4>Adults</h4>
-                                <h5>(18+)</h5>
-                                <Selector {...room.status}>
-                                    {this.state.adult.map(count => {
-                                       return <Option>{count}</Option>
-                                    })}
-                                </Selector>
-                            </AgeFilter>
-                            <AgeFilter>
-                                <h4>Children</h4>
-                                <h5>(0-17)</h5>
-                                <Selector state={activeFlag}>
-                                    {this.state.children.map(count => {
-                                        return <Option>{count}</Option>
-                                    })}
-                                </Selector>
-                            </AgeFilter>
-                        </OptionsContainer>
-                    </Box>
-                })}
+                {this.state.rooms.map((room, i) =>
+                <Box ref={'box_'+i}>
+                    <BoxHeader>
+
+                        {(i !== 0) ?
+                            <div>
+                                <CheckBox
+                                    ref={'check_'+i}
+                                    onClick={()=>this.toggleChecked(i,room.checked)}
+                                />
+                                {room.name}
+                             </div> : room.name}
+                    </BoxHeader>
+                    <OptionsContainer>
+                        <AgeFilter>
+                            <h4>Adults</h4>
+                            <h5>(18+)</h5>
+                            <Selector {...room.status}>
+                                {this.state.adult.map(count => {
+                                   return <Option>{count}</Option>
+                                })}
+                            </Selector>
+                        </AgeFilter>
+                        <AgeFilter>
+                            <h4>Children</h4>
+                            <h5>(0-17)</h5>
+                            <Selector>
+                                {this.state.children.map(count => {
+                                    return <Option>{count}</Option>
+                                })}
+                            </Selector>
+                        </AgeFilter>
+                    </OptionsContainer>
+                </Box>
+                )}
             </Container>
             <ButtonContainer>
                 <Button>
