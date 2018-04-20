@@ -106,7 +106,7 @@ class App extends Component {
     }
 
     handleSubmit(e){
-        alert('submitted')
+        console.log('submitted')
         e.preventDefault()
     }
 
