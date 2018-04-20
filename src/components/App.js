@@ -12,97 +12,47 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            check_0:true,
+            check_1:false,
+            check_2:false,
+            check_3:false,
             rooms: [
-                {
-                    name: 'Room 1',
-                    adults:1,
-                    checked: true
-                },
-                {
-                    name: 'Room 2',
-                    adults:1,
-                    checked: false
-                },
-                {
-                    name: 'Room 3',
-                    adults:1,
-                    checked: false
-                },
-                {
-                    name: 'Room 4',
-                    adults:1,
-                    checked: false
-                }],
-            activeArray: {
-                rooms: [
-                    {
-                        name: 'Room 1',
-                        adults:1,
-                        checked: true
-                    },
-                    {
-                        name: 'Room 2',
-                        adults:1,
-                        checked: false
-                    },
-                    {
-                        name: 'Room 3',
-                        adults:1,
-                        checked: false
-                    },
-                    {
-                        name: 'Room 4',
-                        adults:1,
-                        checked: false
-                    }]
-            },
+                {name: 'Room 1'},
+                {name: 'Room 2'},
+                {name: 'Room 3'},
+                {name: 'Room 4'}
+            ],
             adult: [1, 2],
-            children: [0, 1, 2],
-            room0Adults:1,
-            room1Adults:1,
-            room2Adults:1,
-            room3Adults:1,
-            room0Children:0,
-            room1Children:0,
-            room2Children:0,
-            room3Children:0
+            children: [0, 1, 2]
         }
 
         this.handleChange = this.handleChange.bind(this)
-
     }
 
-    toggleChecked = (k) => {
-        let rooms = this.state.rooms
+    handleCheck = (i, event) => {
+        const target = event.target
+        const name = target.name
+        const value =  target.checked
 
-        //set true/false mutated state until I can figure
-        // out setState (enables me to move forward)
-        rooms[k].checked = !rooms[k].checked
+        for(let j=0;j<i;j++){
+            if(name !== 'check_0')
+                this.setState({
+                    ['check_'+[j+1]]: value
+                })
+        }
 
-        //copy array to set checked status
-        // eslint-disable-next-line
-        this.state.activeArray = rooms.slice(0, k + 1)
-
-        //loop new array & set checked status
-        // eslint-disable-next-line
-        this.state.activeArray.map((room) => {
-
-            room.name !== 'Room 1' ?
-                this.setState({ [room.checked]: rooms[k].checked}):
-                this.setState({ [room.checked]: true })
-            room.name !== 'Room 1' ? room.checked =
-                rooms[k].checked : room.checked = true
-        })
+        console.log(value + ':' + name)
     }
 
     handleChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
+        const target = event.target
+        const value = target.value
+        const name = target.name
 
         this.setState({
             [name]: value
-        });
+        })
+        console.log(value + ':' + name)
     }
 
     handleSubmit(e){
@@ -209,16 +159,15 @@ class App extends Component {
                     <Container >
                         <Form id="guests" onSubmit={this.handleSubmit}>
                             {this.state.rooms.map((room, i) =>
-                                (i === 0) || room.checked ?
+                                (i === 0) || this.state['check_'+i] ?
                                     <Box active>
                                         <BoxHeader active>
                                             {(i !== 0) ?
                                                 <div>
                                                     <CheckBox
-                                                        ref={'check_'+i}
-                                                        onClick={() =>
-                                                            this.toggleChecked(i)
-                                                        }
+                                                        name={'check_'+i}
+                                                        defaultChecked={this.state['check_'+i]}
+                                                        onClick={this.handleCheck.bind(this,i)}
                                                     />
                                                     {room.name}
                                                 </div> : room.name}
@@ -258,10 +207,9 @@ class App extends Component {
                                             {(i !== 0) ?
                                                 <div>
                                                     <CheckBox
-                                                        ref={'check_'+i}
-                                                        onClick={() =>
-                                                            this.toggleChecked(i)
-                                                        }
+                                                        name={'check_'+i}
+                                                        defaultChecked={this.state['check_'+i]}
+                                                        onClick={this.handleCheck.bind(this,i)}
                                                     />
                                                     {room.name}
                                                 </div> : room.name}
