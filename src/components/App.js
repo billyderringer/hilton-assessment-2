@@ -57,8 +57,18 @@ class App extends Component {
                     }]
             },
             adult: [1, 2],
-            children: [0, 1, 2]
+            children: [0, 1, 2],
+            room0Adults:1,
+            room1Adults:1,
+            room2Adults:1,
+            room3Adults:1,
+            room0Children:0,
+            room1Children:0,
+            room2Children:0,
+            room3Children:0
         }
+
+        this.handleChange = this.handleChange.bind(this)
 
     }
 
@@ -85,8 +95,14 @@ class App extends Component {
         })
     }
 
-    handleChange = (room) => (e) => {
-        this.setState({[room.adults]: e.target.value})
+    handleChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
     }
 
     handleSubmit(e){
@@ -106,9 +122,9 @@ class App extends Component {
                 header:'#DBDBE3',
                 border:'1px solid #CBCFDB'
             }
-         }
+        }
 
-         const Form = styled.form`
+        const Form = styled.form`
           display: -webkit-box;
           display: -ms-flexbox;
           display: flex;
@@ -118,7 +134,7 @@ class App extends Component {
           flex-flow: row wrap;
          `;
 
-         const Container = styled.div`
+        const Container = styled.div`
             padding: 20px 0 0 20px;
        
          `;
@@ -187,99 +203,106 @@ class App extends Component {
             }
         `;
 
-    return (
-        <ThemeProvider theme={theme}>
-            <div>
-                <Container >
-                    <Form id="guests" onSubmit={this.handleSubmit}>
-                        {this.state.rooms.map((room, i) =>
-                            (i === 0) || room.checked ?
-                                <Box active>
-                                    {console.log(room.adults)}
-                                    <BoxHeader active>
-                                        {(i !== 0) ?
-                                            <div>
-                                                <CheckBox
-                                                    ref={'check_'+i}
-                                                    onClick={() =>
-                                                        this.toggleChecked(i)
-                                                    }
-                                                />
-                                                {room.name}
-                                            </div> : room.name}
-                                    </BoxHeader>
-                                    <OptionsContainer>
-                                        <AgeFilter>
-                                            <h4>Adults</h4>
-                                            <h5>(18+)</h5>
-                                            <Selector
-                                                value={this.state.value}
-                                                onChange={()=>this.handleChange(room)}
-                                            >
-                                                <Option>1</Option>
-                                                <Option>2</Option>
-                                            </Selector>
-                                        </AgeFilter>
-                                        <AgeFilter>
-                                            <h4>Children</h4>
-                                            <h5>(0-17)</h5>
-                                            <Selector>
-                                                {this.state.children.map(count => {
-                                                    return <Option>{count}</Option>
-                                                })}
-                                            </Selector>
-                                        </AgeFilter>
-                                    </OptionsContainer>
-                                </Box>
-                                :
-                                <Box inactive>
-                                    <BoxHeader>
-                                        {(i !== 0) ?
-                                            <div>
-                                                <CheckBox
-                                                    ref={'check_'+i}
-                                                    onClick={() =>
-                                                        this.toggleChecked(i)
-                                                    }
-                                                />
-                                                {room.name}
-                                            </div> : room.name}
-                                    </BoxHeader>
-                                    <OptionsContainer>
-                                        <AgeFilter>
-                                            <h4>Adults</h4>
-                                            <h5>(18+)</h5>
-                                            <Selector disabled>
-                                                {this.state.adult.map(count => {
-                                                    return <Option>{count}</Option>
-                                                })}
-                                            </Selector>
-                                        </AgeFilter>
-                                        <AgeFilter>
-                                            <h4>Children</h4>
-                                            <h5>(0-17)</h5>
-                                            <Selector disabled>
-                                                {this.state.children.map(count => {
-                                                    return <Option>{count}</Option>
-                                                })}
-                                            </Selector>
-                                        </AgeFilter>
-                                    </OptionsContainer>
-                                </Box>
-                        )}
-                    </Form>
-                    <ButtonContainer>
-                        <Button
-                            form="guests"
-                            type="Submit">
-                            Submit
-                        </Button>
-                    </ButtonContainer>
-                </Container>
-            </div>
-        </ThemeProvider>
-    );
-  }
+        return (
+            <ThemeProvider theme={theme}>
+                <div>
+                    <Container >
+                        <Form id="guests" onSubmit={this.handleSubmit}>
+                            {this.state.rooms.map((room, i) =>
+                                (i === 0) || room.checked ?
+                                    <Box active>
+                                        {console.log(this.state)}
+                                        <BoxHeader active>
+                                            {(i !== 0) ?
+                                                <div>
+                                                    <CheckBox
+                                                        ref={'check_'+i}
+                                                        onClick={() =>
+                                                            this.toggleChecked(i)
+                                                        }
+                                                    />
+                                                    {room.name}
+                                                </div> : room.name}
+                                        </BoxHeader>
+                                        <OptionsContainer>
+                                            <AgeFilter>
+                                                <h4>Adults</h4>
+                                                <h5>(18+)</h5>
+                                                <Selector
+                                                    name={'room'+i+'Adults'}
+                                                    value={this.state['room'+i+'Adults']}
+                                                    onChange={this.handleChange}
+                                                >
+                                                    {this.state.adult.map(count => {
+                                                        return <Option>{count}</Option>
+                                                    })}
+                                                </Selector>
+                                            </AgeFilter>
+                                            <AgeFilter>
+                                                <h4>Children</h4>
+                                                <h5>(0-17)</h5>
+                                                <Selector
+                                                    name={'room'+i+'Children'}
+                                                    value={this.state['room'+i+'Children']}
+                                                    onChange={this.handleChange}
+                                                >
+                                                    {this.state.children.map(count => {
+                                                        return <Option>{count}</Option>
+                                                    })}
+                                                </Selector>
+                                                {console.log(this.state)}
+                                            </AgeFilter>
+                                        </OptionsContainer>
+                                    </Box>
+                                    :
+                                    <Box inactive>
+                                        <BoxHeader>
+                                            {(i !== 0) ?
+                                                <div>
+                                                    <CheckBox
+                                                        ref={'check_'+i}
+                                                        onClick={() =>
+                                                            this.toggleChecked(i)
+                                                        }
+                                                    />
+                                                    {room.name}
+                                                </div> : room.name}
+                                        </BoxHeader>
+                                        <OptionsContainer>
+                                            <AgeFilter>
+                                                <h4>Adults</h4>
+                                                <h5>(18+)</h5>
+                                                <Selector disabled>
+                                                    {this.state.adult.map(count => {
+                                                        return <Option>{count}</Option>
+                                                    })}
+                                                </Selector>
+                                            </AgeFilter>
+                                            <AgeFilter>
+                                                <h4>Children</h4>
+                                                <h5>(0-17)</h5>
+                                                <Selector disabled>
+                                                    {this.state.children.map(count => {
+                                                        return <Option>{count}</Option>
+                                                    })}
+                                                </Selector>
+                                            </AgeFilter>
+                                        </OptionsContainer>
+                                    </Box>
+                            )}
+                        </Form>
+                        <ButtonContainer>
+                            <Button
+                                form="guests"
+                                type="Submit">
+                                Submit
+                            </Button>
+                        </ButtonContainer>
+                    </Container>
+                </div>
+            </ThemeProvider>
+        );
+    }
 }
 
 export default App;
