@@ -196,7 +196,7 @@ class App extends Component {
         })`
             background: #C0C0C0;
             padding: 5px 10px;
-            margin: 20px 0 0 20px;
+            margin: 20px 0 20px 0;
             display: block;
             &:hover{
                 cursor: pointer;
