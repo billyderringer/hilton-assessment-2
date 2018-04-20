@@ -211,7 +211,6 @@ class App extends Component {
                             {this.state.rooms.map((room, i) =>
                                 (i === 0) || room.checked ?
                                     <Box active>
-                                        {console.log(this.state)}
                                         <BoxHeader active>
                                             {(i !== 0) ?
                                                 <div>
@@ -250,7 +249,6 @@ class App extends Component {
                                                         return <Option>{count}</Option>
                                                     })}
                                                 </Selector>
-                                                {console.log(this.state)}
                                             </AgeFilter>
                                         </OptionsContainer>
                                     </Box>
