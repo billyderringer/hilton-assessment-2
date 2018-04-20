@@ -106,8 +106,8 @@ class App extends Component {
     }
 
     handleSubmit(e){
-        alert('Your favorite flavor is: ' + this.state.value);
-        e.preventDefault();
+        alert('submitted')
+        e.preventDefault()
     }
 
     render() {
