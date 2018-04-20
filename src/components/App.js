@@ -1,46 +1,61 @@
 import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
+
+
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeState: 'inactive',
-            rooms:[
+            rooms: [
                 {
-                    name:'Room 1',
-                    status:'active',
-                    checked:true
+                    name: 'Room 1',
+                    checked: true
                 },
                 {
-                    name:'Room 2',
-                    status:'inactive',
-                    checked:true
+                    name: 'Room 2',
+                    checked: false
                 },
                 {
-                    name:'Room 3',
-                    status:'inactive',
-                    checked:true
+                    name: 'Room 3',
+                    checked: false
                 },
                 {
-                    name:'Room 4',
-                    status:'inactive',
-                    checked:true
+                    name: 'Room 4',
+                    checked: false
                 }],
-            checked:false,
-            adult:[1,2],
-            children:[0,1,2]
+            activeArray: {
+                rooms: [
+                    {
+                        name: 'Room 1',
+                        checked: true
+                    },
+                    {
+                        name: 'Room 2',
+                        checked: false
+                    },
+                    {
+                        name: 'Room 3',
+                        checked: false
+                    },
+                    {
+                        name: 'Room 4',
+                        checked: false
+                    }]
+            },
+            adult: [1, 2],
+            children: [0, 1, 2]
         }
     }
 
     toggleChecked = (i) => {
-        let check = 'check_' + i
-        this.refs[check].checked = !this.refs[check].checked
-        console.log(this.refs[check].checked)
+        let rooms = this.state.rooms
+        rooms[i].checked = !rooms[i].checked
+        this.state.activeArray = rooms.slice(1,i+1)
+
+        console.log(this.state.activeArray)
+        console.log(rooms[i].name + ' ' + rooms[i].checked)
     }
-
-
-
 
     render() {
         const theme = {
@@ -83,7 +98,7 @@ class App extends Component {
         //figure out checkbox color
         const CheckBox = styled.input.attrs({
             type: 'checkbox',
-            class: 'radio'
+            className: 'radio'
         })`
             margin: 0 5px 0 0;
         `;
@@ -132,7 +147,6 @@ class App extends Component {
                         {(i !== 0) ?
                             <div>
                                 <CheckBox
-                                    ref={'check_'+i}
                                     onChange={() =>
                                         this.toggleChecked(i)
                                     }
@@ -144,7 +158,7 @@ class App extends Component {
                         <AgeFilter>
                             <h4>Adults</h4>
                             <h5>(18+)</h5>
-                            <Selector {...room.status}>
+                            <Selector {...room.checked}>
                                 {this.state.adult.map(count => {
                                    return <Option>{count}</Option>
                                 })}
