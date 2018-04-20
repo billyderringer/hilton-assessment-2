@@ -50,11 +50,19 @@ class App extends Component {
 
     toggleChecked = (i) => {
         let rooms = this.state.rooms
+        //set true/false mutated state until I can figure
+        // out setState (enables me to move forward)
         rooms[i].checked = !rooms[i].checked
-        this.state.activeArray = rooms.slice(1,i+1)
 
+        //copy array to set checked status
+        this.state.activeArray = rooms.slice(0, i + 1)
+
+        //loop new array & set checked status
+        for (let k=1;k<i;k++){
+                this.state.activeArray[k].checked =
+                rooms[i].checked
+        }
         console.log(this.state.activeArray)
-        console.log(rooms[i].name + ' ' + rooms[i].checked)
     }
 
     render() {
@@ -147,6 +155,7 @@ class App extends Component {
                         {(i !== 0) ?
                             <div>
                                 <CheckBox
+                                    ref={'check_'+i}
                                     onChange={() =>
                                         this.toggleChecked(i)
                                     }
