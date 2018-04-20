@@ -212,7 +212,7 @@ class App extends Component {
                             <AgeFilter>
                                 <h4>Adults</h4>
                                 <h5>(18+)</h5>
-                                <Selector disabled={''}>
+                                <Selector disabled>
                                     {this.state.adult.map(count => {
                                         return <Option>{count}</Option>
                                     })}
@@ -221,7 +221,7 @@ class App extends Component {
                             <AgeFilter>
                                 <h4>Children</h4>
                                 <h5>(0-17)</h5>
-                                <Selector disabled={'disabled'}>
+                                <Selector disabled>
                                     {this.state.children.map(count => {
                                         return <Option>{count}</Option>
                                     })}
