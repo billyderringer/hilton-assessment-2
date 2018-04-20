@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
-
+let active = active
+let inactive = inactive
+let disabled = disabled
 
 class App extends Component {
     constructor(props) {
@@ -48,21 +50,26 @@ class App extends Component {
         }
     }
 
-    toggleChecked = (i) => {
+    toggleChecked = (k) => {
         let rooms = this.state.rooms
+
         //set true/false mutated state until I can figure
         // out setState (enables me to move forward)
-        rooms[i].checked = !rooms[i].checked
+        rooms[k].checked = !rooms[k].checked
 
         //copy array to set checked status
-        this.state.activeArray = rooms.slice(0, i + 1)
+        this.state.activeArray = rooms.slice(0, k + 1)
 
         //loop new array & set checked status
-        for (let k=1;k<i;k++){
-                this.state.activeArray[k].checked =
-                rooms[i].checked
-        }
-        console.log(this.state.activeArray)
+        this.state.activeArray.map((room) => {
+
+            room.name !== 'Room 1' ?
+                this.setState({ [room.checked]: rooms[k].checked}):
+                this.setState({ [room.checked]: true })
+            room.name !== 'Room 1' ? room.checked =
+                rooms[k].checked : room.checked = true
+            console.log(room)
+        })
     }
 
     render() {
@@ -90,8 +97,11 @@ class App extends Component {
             height: 165px; 
             margin: 0 5px 5px 0; 
             border-radius: 5px; 
-            border: ${props => props.theme.active.border};
-            background: ${props => props.theme.active.primary}
+            border: ${props => props.active ? theme.active.border :
+            theme.inactive.border}
+        };
+            background: ${props => props.active ? theme.active.primary :
+            theme.inactive.primary}
         `;
 
         const BoxHeader = styled.div`
@@ -100,13 +110,13 @@ class App extends Component {
             font-size: .9em;
             height: 20%;
             padding-left: 5px;
-            background: ${props => props.theme.active.header}
+            background: ${props => props.active ? theme.active.header :
+            theme.inactive.header}
         `;
 
         //figure out checkbox color
         const CheckBox = styled.input.attrs({
-            type: 'checkbox',
-            className: 'radio'
+            type: 'checkbox'
         })`
             margin: 0 5px 0 0;
         `;
@@ -148,15 +158,16 @@ class App extends Component {
     return (
     <ThemeProvider theme={theme}>
         <div>
-            <Container>
+            <Container >
                 {this.state.rooms.map((room, i) =>
-                <Box ref={'box_'+i}>
-                    <BoxHeader>
+                (i === 0) || room.checked ?
+                    <Box active>
+                    <BoxHeader active>
                         {(i !== 0) ?
                             <div>
                                 <CheckBox
                                     ref={'check_'+i}
-                                    onChange={() =>
+                                    onClick={() =>
                                         this.toggleChecked(i)
                                     }
                                 />
@@ -167,7 +178,7 @@ class App extends Component {
                         <AgeFilter>
                             <h4>Adults</h4>
                             <h5>(18+)</h5>
-                            <Selector {...room.checked}>
+                            <Selector >
                                 {this.state.adult.map(count => {
                                    return <Option>{count}</Option>
                                 })}
@@ -183,7 +194,41 @@ class App extends Component {
                             </Selector>
                         </AgeFilter>
                     </OptionsContainer>
-                </Box>
+                </Box>:
+                    <Box inactive>
+                        <BoxHeader>
+                            {(i !== 0) ?
+                                <div>
+                                    <CheckBox
+                                        ref={'check_'+i}
+                                        onClick={() =>
+                                            this.toggleChecked(i)
+                                        }
+                                    />
+                                    {room.name}
+                                </div> : room.name}
+                        </BoxHeader>
+                        <OptionsContainer>
+                            <AgeFilter>
+                                <h4>Adults</h4>
+                                <h5>(18+)</h5>
+                                <Selector disabled={''}>
+                                    {this.state.adult.map(count => {
+                                        return <Option>{count}</Option>
+                                    })}
+                                </Selector>
+                            </AgeFilter>
+                            <AgeFilter>
+                                <h4>Children</h4>
+                                <h5>(0-17)</h5>
+                                <Selector disabled={'disabled'}>
+                                    {this.state.children.map(count => {
+                                        return <Option>{count}</Option>
+                                    })}
+                                </Selector>
+                            </AgeFilter>
+                        </OptionsContainer>
+                    </Box>
                 )}
             </Container>
             <ButtonContainer>
