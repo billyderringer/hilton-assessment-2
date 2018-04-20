@@ -93,8 +93,8 @@ class App extends Component {
          `;
 
         const Box = styled.div`
-            width: 200px;
-            height: 165px; 
+            width: 180px;
+            height: 150px; 
             margin: 0 5px 5px 0; 
             border-radius: 5px; 
             border: ${props => props.active ? theme.active.border :
