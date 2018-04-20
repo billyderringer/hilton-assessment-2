@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
-let active = active
-let inactive = inactive
-let disabled = disabled
+// eslint-disable-next-line
+let active = 'active'
+// eslint-disable-next-line
+let inactive = 'inactive'
+// eslint-disable-next-line
+let disabled = 'disabled'
 
 class App extends Component {
     constructor(props) {
@@ -12,42 +15,51 @@ class App extends Component {
             rooms: [
                 {
                     name: 'Room 1',
+                    adults:1,
                     checked: true
                 },
                 {
                     name: 'Room 2',
+                    adults:1,
                     checked: false
                 },
                 {
                     name: 'Room 3',
+                    adults:1,
                     checked: false
                 },
                 {
                     name: 'Room 4',
+                    adults:1,
                     checked: false
                 }],
             activeArray: {
                 rooms: [
                     {
                         name: 'Room 1',
+                        adults:1,
                         checked: true
                     },
                     {
                         name: 'Room 2',
+                        adults:1,
                         checked: false
                     },
                     {
                         name: 'Room 3',
+                        adults:1,
                         checked: false
                     },
                     {
                         name: 'Room 4',
+                        adults:1,
                         checked: false
                     }]
             },
             adult: [1, 2],
             children: [0, 1, 2]
         }
+
     }
 
     toggleChecked = (k) => {
@@ -58,9 +70,11 @@ class App extends Component {
         rooms[k].checked = !rooms[k].checked
 
         //copy array to set checked status
+        // eslint-disable-next-line
         this.state.activeArray = rooms.slice(0, k + 1)
 
         //loop new array & set checked status
+        // eslint-disable-next-line
         this.state.activeArray.map((room) => {
 
             room.name !== 'Room 1' ?
@@ -68,8 +82,16 @@ class App extends Component {
                 this.setState({ [room.checked]: true })
             room.name !== 'Room 1' ? room.checked =
                 rooms[k].checked : room.checked = true
-            console.log(room)
         })
+    }
+
+    handleChange = (room) => (e) => {
+        this.setState({[room.adults]: e.target.value})
+    }
+
+    handleSubmit(e){
+        alert('Your favorite flavor is: ' + this.state.value);
+        e.preventDefault();
     }
 
     render() {
@@ -86,10 +108,19 @@ class App extends Component {
             }
          }
 
+         const Form = styled.form`
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: horizontal;
+          -webkit-box-direction: normal;
+          -ms-flex-flow: row nowrap;
+          flex-flow: row wrap;
+         `;
+
          const Container = styled.div`
             padding: 20px 0 0 20px;
-            display: flex;
-            flex-wrap: wrap;
+       
          `;
 
         const Box = styled.div`
@@ -150,94 +181,103 @@ class App extends Component {
             background: #C0C0C0;
             padding: 5px 10px;
             margin: 20px 0 0 20px;
+            display: block;
             &:hover{
                 cursor: pointer;
             }
         `;
 
     return (
-    <ThemeProvider theme={theme}>
-        <div>
-            <Container >
-                {this.state.rooms.map((room, i) =>
-                (i === 0) || room.checked ?
-                    <Box active>
-                    <BoxHeader active>
-                        {(i !== 0) ?
-                            <div>
-                                <CheckBox
-                                    ref={'check_'+i}
-                                    onClick={() =>
-                                        this.toggleChecked(i)
-                                    }
-                                />
-                                {room.name}
-                             </div> : room.name}
-                    </BoxHeader>
-                    <OptionsContainer>
-                        <AgeFilter>
-                            <h4>Adults</h4>
-                            <h5>(18+)</h5>
-                            <Selector >
-                                {this.state.adult.map(count => {
-                                   return <Option>{count}</Option>
-                                })}
-                            </Selector>
-                        </AgeFilter>
-                        <AgeFilter>
-                            <h4>Children</h4>
-                            <h5>(0-17)</h5>
-                            <Selector>
-                                {this.state.children.map(count => {
-                                    return <Option>{count}</Option>
-                                })}
-                            </Selector>
-                        </AgeFilter>
-                    </OptionsContainer>
-                </Box>:
-                    <Box inactive>
-                        <BoxHeader>
-                            {(i !== 0) ?
-                                <div>
-                                    <CheckBox
-                                        ref={'check_'+i}
-                                        onClick={() =>
-                                            this.toggleChecked(i)
-                                        }
-                                    />
-                                    {room.name}
-                                </div> : room.name}
-                        </BoxHeader>
-                        <OptionsContainer>
-                            <AgeFilter>
-                                <h4>Adults</h4>
-                                <h5>(18+)</h5>
-                                <Selector disabled>
-                                    {this.state.adult.map(count => {
-                                        return <Option>{count}</Option>
-                                    })}
-                                </Selector>
-                            </AgeFilter>
-                            <AgeFilter>
-                                <h4>Children</h4>
-                                <h5>(0-17)</h5>
-                                <Selector disabled>
-                                    {this.state.children.map(count => {
-                                        return <Option>{count}</Option>
-                                    })}
-                                </Selector>
-                            </AgeFilter>
-                        </OptionsContainer>
-                    </Box>
-                )}
-            </Container>
-            <ButtonContainer>
-                <Button>
-                    Submit
-                </Button>
-            </ButtonContainer>
-        </div>
-    </ThemeProvider>
+        <ThemeProvider theme={theme}>
+            <div>
+                <Container >
+                    <Form id="guests" onSubmit={this.handleSubmit}>
+                        {this.state.rooms.map((room, i) =>
+                            (i === 0) || room.checked ?
+                                <Box active>
+                                    {console.log(room.adults)}
+                                    <BoxHeader active>
+                                        {(i !== 0) ?
+                                            <div>
+                                                <CheckBox
+                                                    ref={'check_'+i}
+                                                    onClick={() =>
+                                                        this.toggleChecked(i)
+                                                    }
+                                                />
+                                                {room.name}
+                                            </div> : room.name}
+                                    </BoxHeader>
+                                    <OptionsContainer>
+                                        <AgeFilter>
+                                            <h4>Adults</h4>
+                                            <h5>(18+)</h5>
+                                            <Selector
+                                                value={this.state.value}
+                                                onChange={()=>this.handleChange(room)}
+                                            >
+                                                <Option>1</Option>
+                                                <Option>2</Option>
+                                            </Selector>
+                                        </AgeFilter>
+                                        <AgeFilter>
+                                            <h4>Children</h4>
+                                            <h5>(0-17)</h5>
+                                            <Selector>
+                                                {this.state.children.map(count => {
+                                                    return <Option>{count}</Option>
+                                                })}
+                                            </Selector>
+                                        </AgeFilter>
+                                    </OptionsContainer>
+                                </Box>
+                                :
+                                <Box inactive>
+                                    <BoxHeader>
+                                        {(i !== 0) ?
+                                            <div>
+                                                <CheckBox
+                                                    ref={'check_'+i}
+                                                    onClick={() =>
+                                                        this.toggleChecked(i)
+                                                    }
+                                                />
+                                                {room.name}
+                                            </div> : room.name}
+                                    </BoxHeader>
+                                    <OptionsContainer>
+                                        <AgeFilter>
+                                            <h4>Adults</h4>
+                                            <h5>(18+)</h5>
+                                            <Selector disabled>
+                                                {this.state.adult.map(count => {
+                                                    return <Option>{count}</Option>
+                                                })}
+                                            </Selector>
+                                        </AgeFilter>
+                                        <AgeFilter>
+                                            <h4>Children</h4>
+                                            <h5>(0-17)</h5>
+                                            <Selector disabled>
+                                                {this.state.children.map(count => {
+                                                    return <Option>{count}</Option>
+                                                })}
+                                            </Selector>
+                                        </AgeFilter>
+                                    </OptionsContainer>
+                                </Box>
+                        )}
+                    </Form>
+                    <ButtonContainer>
+                        <Button
+                            form="guests"
+                            type="Submit">
+                            Submit
+                        </Button>
+                    </ButtonContainer>
+                </Container>
+            </div>
+        </ThemeProvider>
     );
   }
 }
