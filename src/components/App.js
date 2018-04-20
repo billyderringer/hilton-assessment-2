@@ -34,14 +34,19 @@ class App extends Component {
         const name = target.name
         const value =  target.checked
 
+        for(let j=0;j<this.state.rooms.length;j++){
+                this.setState({
+                    ['check_'+j]: false
+                })
+        }
         for(let j=0;j<i;j++){
-            if(name !== 'check_0')
+            if(name !== 'check_0' )
                 this.setState({
                     ['check_'+[j+1]]: value
                 })
         }
 
-        console.log(value + ':' + name)
+        console.log(this.state.check_3)
     }
 
     handleChange(event) {
@@ -56,8 +61,8 @@ class App extends Component {
     }
 
     handleSubmit(e){
-        console.log('submitted')
         e.preventDefault()
+        console.log('submitted')
     }
 
     render() {
