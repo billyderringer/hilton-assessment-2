@@ -1,13 +1,6 @@
 import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
-// eslint-disable-next-line
-let active = 'active'
-// eslint-disable-next-line
-let inactive = 'inactive'
-// eslint-disable-next-line
-let disabled = 'disabled'
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +19,7 @@ class App extends Component {
             children: [0, 1, 2]
         }
 
+        this.handleCheck = this.handleCheck.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -35,17 +29,19 @@ class App extends Component {
         const name = target.name
         const value =  target.checked
 
-        for(let j=0;j<this.state.rooms.length;j++){
-                this.setState({
-                    ['check_'+j]: false
-                })
+        for(let j=1;j<this.state.rooms.length;j++){
+            this.setState({
+            ['check_'+j]:((j <= i && j !== 0) ? true : false)
+            })
         }
-        for(let j=0;j<i;j++){
+        /*for(let j=0;j<i;j++){
             if(name !== 'check_0' )
                 this.setState({
                     ['check_'+[j+1]]: value
                 })
-        }
+        }*/
+
+        console.log(this.state.check_3)
     }
 
     handleChange(event) {
@@ -58,26 +54,8 @@ class App extends Component {
         })
     }
 
-    handleSubmit(event) {
-        localStorage.clear()
-        /*What i think this does is set the value to whatever the user
-has submitted in the form and then call it to the console for me to see*/
-        let data = event.target.value
-        localStorage.setItem("check_0", this.state.check_0)
-        localStorage.setItem("check_1", this.state.check_1)
-        localStorage.setItem("check_2", this.state.check_2)
-        localStorage.setItem("check_3", this.state.check_3)
-        let storedData =
-            localStorage.getItem("check_0", this.state.check_0)
-            localStorage.getItem("check_1", this.state.check_1)
-            localStorage.getItem("check_2", this.state.check_2)
-            localStorage.getItem("check_3", this.state.check_3)
+    handleSubmit() {
 
-        this.setState({
-            [event.target]:storedData
-        })
-        /*another failed attempt, i do not have these both running at the same time*/
-        console.log(localStorage.getItem("check_3"))
     }
 
     render() {
