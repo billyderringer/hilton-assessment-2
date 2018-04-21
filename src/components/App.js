@@ -24,6 +24,32 @@ class App extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    componentWillUpdate(nextProps,nextState){
+        localStorage.setItem('check_0', JSON.stringify(nextState.check_0))
+        localStorage.setItem('check_1', JSON.stringify(nextState.check_1))
+        localStorage.setItem('check_2', JSON.stringify(nextState.check_2))
+        localStorage.setItem('check_3', JSON.stringify(nextState.check_3))
+
+    }
+
+    componentDidMount(){
+        const check0 = localStorage.getItem("check_0")
+        const check1 = localStorage.getItem("check_1")
+        const check2 = localStorage.getItem("check_2")
+        const check3 = localStorage.getItem("check_3")
+
+        if (check0 === '' || check1 === '' || check2 === '' || check3 === ''){
+            console.log('value = \'\'')
+        }
+
+        this.setState({
+            check_0: JSON.parse(check0),
+            check_1: JSON.parse(check1),
+            check_2: JSON.parse(check2),
+            check_3: JSON.parse(check3)
+        })
+    }
+
     handleCheck = (i, event) => {
         const target = event.target
         const value =  target.checked
