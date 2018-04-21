@@ -26,22 +26,16 @@ class App extends Component {
 
     handleCheck = (i, event) => {
         const target = event.target
-        const name = target.name
         const value =  target.checked
 
-        for(let j=1;j<this.state.rooms.length;j++){
+        for(let j=0;j<this.state.rooms.length;j++){
             this.setState({
-            ['check_'+j]:((j <= i && j !== 0) ? true : false)
+                ['check_'+j]:(j < i && j !== 0)
             })
         }
-        /*for(let j=0;j<i;j++){
-            if(name !== 'check_0' )
-                this.setState({
-                    ['check_'+[j+1]]: value
-                })
-        }*/
-
-        console.log(this.state.check_3)
+        this.setState({
+            ['check_'+i]:value
+        })
     }
 
     handleChange(event) {
@@ -251,4 +245,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default App
