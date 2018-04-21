@@ -167,29 +167,31 @@ class App extends Component {
                                                 </div> : room.name}
                                         </BoxHeader>
                                         <OptionsContainer>
-                                            <AgeFilter>
-                                                <h4>Adults</h4>
-                                                <h5>(18+)</h5>
+                                            <AgeFilter key={'age_filter_'+i++}>
+                                                <h4 key={'adult_title_'+i++}>Adults</h4>
+                                                <h5 key={'adult_age_'+i++}>(18+)</h5>
                                                 <Selector
+                                                    key={'select_'+i++}
                                                     name={'room'+i+'Adults'}
                                                     value={this.state['room'+i+'Adults']}
                                                     onChange={this.handleChange}
                                                 >
                                                     {this.state.adult.map(count => {
-                                                        return <Option>{count}</Option>
+                                                        return <Option key={'option_'+i++}>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
-                                            <AgeFilter>
-                                                <h4>Children</h4>
-                                                <h5>(0-17)</h5>
+                                            <AgeFilter key={'age_filter_children_'+i++}>
+                                                <h4 key={'children_title_'+i++}>Children</h4>
+                                                <h5 key={'children_age_'+i++}>(0-17)</h5>
                                                 <Selector
+                                                    key={'select_children_'+i++}
                                                     name={'room'+i+'Children'}
                                                     value={this.state['room'+i+'Children']}
                                                     onChange={this.handleChange}
                                                 >
                                                     {this.state.children.map(count => {
-                                                        return <Option>{count}</Option>
+                                                        return <Option key={'option_children_'+i++}>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
@@ -208,22 +210,22 @@ class App extends Component {
                                                     {room.name}
                                                 </div> : room.name}
                                         </BoxHeader>
-                                        <OptionsContainer>
-                                            <AgeFilter>
-                                                <h4>Adults</h4>
-                                                <h5>(18+)</h5>
-                                                <Selector disabled>
+                                        <OptionsContainer key={'option_container_'+i++}>
+                                            <AgeFilter key={'age_filter_'+i++}>
+                                                <h4 key={'adult_title_'+i++}>Adults</h4>
+                                                <h5 key={'adult_age_'+i++}>(18+)</h5>
+                                                <Selector key={'selector_'+i++} disabled>
                                                     {this.state.adult.map(count => {
-                                                        return <Option>{count}</Option>
+                                                        return <Option key={'option_'+i++}>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
-                                            <AgeFilter>
-                                                <h4>Children</h4>
-                                                <h5>(0-17)</h5>
-                                                <Selector disabled>
+                                            <AgeFilter key={'age_filter_children_'+i++}>
+                                                <h4 key={'children_title_'+i++}>Children</h4>
+                                                <h5 key={'children_age_'+i++}>(0-17)</h5>
+                                                <Selector key={'selector_children_'+i++} disabled>
                                                     {this.state.children.map(count => {
-                                                        return <Option>{count}</Option>
+                                                        return <Option key={'option_children_'+i++}>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
