@@ -228,8 +228,8 @@ class App extends Component {
                                         </BoxHeader>
                                         <OptionsContainer>
                                             <AgeFilter>
-                                                <h4>Adults</h4>
-                                                <h5>(18+)</h5>
+                                                <h4 key={'adult_title_'+i}>Adults</h4>
+                                                <h5 key={'adult_age_'+i}>(18+)</h5>
                                                 <Selector
                                                     name={'room'+i+'Adults'}
                                                     value={this.state['room'+i+'Adults']}
@@ -241,8 +241,8 @@ class App extends Component {
                                                 </Selector>
                                             </AgeFilter>
                                             <AgeFilter>
-                                                <h4>Children</h4>
-                                                <h5>(0-17)</h5>
+                                                <h4 key={'child_title_'+i}>Children</h4>
+                                                <h5 key={'child_age_'+i}>(0-17)</h5>
                                                 <Selector
                                                     name={'room'+i+'Children'}
                                                     value={this.state['room'+i+'Children']}
@@ -270,8 +270,8 @@ class App extends Component {
                                         </BoxHeader>
                                         <OptionsContainer>
                                             <AgeFilter>
-                                                <h4>Adults</h4>
-                                                <h5>(18+)</h5>
+                                                <h4 key={'adult_title_'+i}>Adults</h4>
+                                                <h5 key={'adult_age_'+i}>(18+)</h5>
                                                 <Selector disabled>
                                                     {this.state.adult.map(count => {
                                                         return <Option>{count}</Option>
@@ -279,8 +279,8 @@ class App extends Component {
                                                 </Selector>
                                             </AgeFilter>
                                             <AgeFilter>
-                                                <h4>Children</h4>
-                                                <h5>(0-17)</h5>
+                                                <h4 key={'child_title_'+i}>Children</h4>
+                                                <h5 key={'child_age_'+i}>(0-17)</h5>
                                                 <Selector disabled>
                                                     {this.state.children.map(count => {
                                                         return <Option>{count}</Option>
