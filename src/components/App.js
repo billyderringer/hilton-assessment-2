@@ -108,6 +108,9 @@ class App extends Component {
         })
     }
 
+    handleSubmit() {
+    }
+
     render() {
         const theme = {
             active: {
