@@ -193,8 +193,8 @@ class App extends Component {
         })`
             background: #C0C0C0;
             padding: 5px 10px;
-            margin: 20px 0 20px 0;
-            display: block;
+            margin: 20px 10px 20px 0;
+            display: inline;
             &:hover{
                 cursor: pointer;
             }
@@ -291,6 +291,10 @@ class App extends Component {
                                 form="guests"
                                 type="Submit">
                                 Submit
+                            </Button>
+                            <Button
+                                onClick={this.handleClear.bind(this)}>
+                                Clear Values
                             </Button>
                         </ButtonContainer>
                     </Container>
