@@ -108,10 +108,6 @@ class App extends Component {
         })
     }
 
-    handleSubmit() {
-
-    }
-
     render() {
         const theme = {
             active: {
@@ -138,7 +134,6 @@ class App extends Component {
 
         const Container = styled.div`
             padding: 20px 0 0 20px;
-       
          `;
 
         const Box = styled.div`
@@ -148,7 +143,6 @@ class App extends Component {
             border-radius: 5px; 
             border: ${props => props.active ? theme.active.border :
             theme.inactive.border}
-        };
             background: ${props => props.active ? theme.active.primary :
             theme.inactive.primary}
         `;
@@ -163,7 +157,6 @@ class App extends Component {
             theme.inactive.header}
         `;
 
-        //figure out checkbox color
         const CheckBox = styled.input.attrs({
             type: 'checkbox'
         })`
@@ -178,7 +171,6 @@ class App extends Component {
             align-items: center;
         `;
 
-        //figure out how to remove margin from h4 last-of-type
         const AgeFilter = styled.div`
             text-align: center;
             h4,h5{
