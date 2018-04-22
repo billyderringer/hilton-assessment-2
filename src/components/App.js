@@ -5,10 +5,18 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            check_0:true,
-            check_1:false,
-            check_2:false,
-            check_3:false,
+            check_0: true,
+            check_1: false,
+            check_2: false,
+            check_3: false,
+            room0Children: 0,
+            room1Children: 0,
+            room2Children: 0,
+            room3Children: 0,
+            room0Adults: 1,
+            room1Adults: 1,
+            room2Adults: 1,
+            room3Adults: 1,
             rooms: [
                 {name: 'Room 1'},
                 {name: 'Room 2'},
@@ -29,6 +37,14 @@ class App extends Component {
         localStorage.setItem('check_1', JSON.stringify(nextState.check_1))
         localStorage.setItem('check_2', JSON.stringify(nextState.check_2))
         localStorage.setItem('check_3', JSON.stringify(nextState.check_3))
+        localStorage.setItem('room0Children', JSON.stringify(nextState.room0Children))
+        localStorage.setItem('room1Children', JSON.stringify(nextState.room1Children))
+        localStorage.setItem('room2Children', JSON.stringify(nextState.room2Children))
+        localStorage.setItem('room3Children', JSON.stringify(nextState.room3Children))
+        localStorage.setItem('room0Adults', JSON.stringify(nextState.room0Adults))
+        localStorage.setItem('room1Adults', JSON.stringify(nextState.room1Adults))
+        localStorage.setItem('room2Adults', JSON.stringify(nextState.room2Adults))
+        localStorage.setItem('room3Adults', JSON.stringify(nextState.room3Adults))
 
     }
 
@@ -37,16 +53,34 @@ class App extends Component {
         const check1 = localStorage.getItem("check_1")
         const check2 = localStorage.getItem("check_2")
         const check3 = localStorage.getItem("check_3")
+        const child0 = localStorage.getItem("room0Children")
+        const child1 = localStorage.getItem("room1Children")
+        const child2 = localStorage.getItem("room2Children")
+        const child3 = localStorage.getItem("room3Children")
+        const adult0 = localStorage.getItem("room0Adults")
+        const adult1 = localStorage.getItem("room1Adults")
+        const adult2 = localStorage.getItem("room2Adults")
+        const adult3 = localStorage.getItem("room3Adults")
 
-        if (check0 === '' || check1 === '' || check2 === '' || check3 === ''){
-            console.log('value = \'\'')
+
+        if (check0 === '' || check1 === '' || check2 === '' || check3 === '' || child0 === ''
+            || child1 === '' || child2 === '' || adult1 === '' || adult2 === ''){
+            return
         }
 
         this.setState({
             check_0: JSON.parse(check0),
             check_1: JSON.parse(check1),
             check_2: JSON.parse(check2),
-            check_3: JSON.parse(check3)
+            check_3: JSON.parse(check3),
+            room0Children: JSON.parse(child0),
+            room1Children: JSON.parse(child1),
+            room2Children: JSON.parse(child2),
+            room3Children: JSON.parse(child3),
+            room0Adults: JSON.parse(adult0),
+            room1Adults: JSON.parse(adult1),
+            room2Adults: JSON.parse(adult2),
+            room3Adults: JSON.parse(adult3)
         })
     }
 
@@ -193,31 +227,31 @@ class App extends Component {
                                                 </div> : room.name}
                                         </BoxHeader>
                                         <OptionsContainer>
-                                            <AgeFilter key={'age_filter_'+i++}>
-                                                <h4 key={'adult_title_'+i++}>Adults</h4>
-                                                <h5 key={'adult_age_'+i++}>(18+)</h5>
+                                            <AgeFilter>
+                                                <h4>Adults</h4>
+                                                <h5>(18+)</h5>
                                                 <Selector
-                                                    key={'select_'+i++}
+                                                    key={i}
                                                     name={'room'+i+'Adults'}
                                                     value={this.state['room'+i+'Adults']}
                                                     onChange={this.handleChange}
                                                 >
                                                     {this.state.adult.map(count => {
-                                                        return <Option key={'option_'+i++}>{count}</Option>
+                                                        return <Option  key={i}>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
-                                            <AgeFilter key={'age_filter_children_'+i++}>
-                                                <h4 key={'children_title_'+i++}>Children</h4>
-                                                <h5 key={'children_age_'+i++}>(0-17)</h5>
+                                            <AgeFilter>
+                                                <h4>Children</h4>
+                                                <h5>(0-17)</h5>
                                                 <Selector
-                                                    key={'select_children_'+i++}
+                                                    key={i}
                                                     name={'room'+i+'Children'}
                                                     value={this.state['room'+i+'Children']}
                                                     onChange={this.handleChange}
                                                 >
                                                     {this.state.children.map(count => {
-                                                        return <Option key={'option_children_'+i++}>{count}</Option>
+                                                        return <Option  key={i}>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
@@ -236,22 +270,22 @@ class App extends Component {
                                                     {room.name}
                                                 </div> : room.name}
                                         </BoxHeader>
-                                        <OptionsContainer key={'option_container_'+i++}>
-                                            <AgeFilter key={'age_filter_'+i++}>
-                                                <h4 key={'adult_title_'+i++}>Adults</h4>
-                                                <h5 key={'adult_age_'+i++}>(18+)</h5>
-                                                <Selector key={'selector_'+i++} disabled>
+                                        <OptionsContainer>
+                                            <AgeFilter>
+                                                <h4>Adults</h4>
+                                                <h5>(18+)</h5>
+                                                <Selector key={i} disabled>
                                                     {this.state.adult.map(count => {
-                                                        return <Option key={'option_'+i++}>{count}</Option>
+                                                        return <Option key={i}>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
-                                            <AgeFilter key={'age_filter_children_'+i++}>
-                                                <h4 key={'children_title_'+i++}>Children</h4>
-                                                <h5 key={'children_age_'+i++}>(0-17)</h5>
-                                                <Selector key={'selector_children_'+i++} disabled>
+                                            <AgeFilter>
+                                                <h4>Children</h4>
+                                                <h5>(0-17)</h5>
+                                                <Selector key={i} disabled>
                                                     {this.state.children.map(count => {
-                                                        return <Option key={'option_children_'+i++}>{count}</Option>
+                                                        return <Option key={i}>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
@@ -272,5 +306,72 @@ class App extends Component {
         );
     }
 }
+
+/*this.state = {
+    check_0:true,
+    check_1:false,
+    check_2:false,
+    check_3:false,
+    option_children_0:0,
+    option_children_1:1,
+    option_children_2:2,
+    option_adult_1:1,
+    option_adult_2:2,
+    rooms: [
+        {name: 'Room 1'},
+        {name: 'Room 2'},
+        {name: 'Room 3'},
+        {name: 'Room 4'}
+    ],
+    adult: [1, 2],
+    children: [0, 1, 2]
+}
+
+this.handleCheck = this.handleCheck.bind(this)
+this.handleChange = this.handleChange.bind(this)
+this.handleSubmit = this.handleSubmit.bind(this)
+}
+
+componentWillUpdate(nextProps,nextState){
+    localStorage.setItem('check_0', JSON.stringify(nextState.check_0))
+    localStorage.setItem('check_1', JSON.stringify(nextState.check_1))
+    localStorage.setItem('check_2', JSON.stringify(nextState.check_2))
+    localStorage.setItem('check_3', JSON.stringify(nextState.check_3))
+    localStorage.setItem('option_children_0', JSON.stringify(nextState.option_children_0))
+    localStorage.setItem('option_children_1', JSON.stringify(nextState.option_children_1))
+    localStorage.setItem('option_children_2', JSON.stringify(nextState.option_children_2))
+    localStorage.setItem('option_adult_1', JSON.stringify(nextState.option_adult_1))
+    localStorage.setItem('option_adult_2', JSON.stringify(nextState.option_adult_2))
+}
+
+componentDidMount(){
+    const check0 = localStorage.getItem("check_0")
+    const check1 = localStorage.getItem("check_1")
+    const check2 = localStorage.getItem("check_2")
+    const check3 = localStorage.getItem("check_3")
+    const child0 = localStorage.getItem("option_children_0")
+    const child1 = localStorage.getItem("option_children_1")
+    const child2 = localStorage.getItem("option_children_2")
+    const adult1 = localStorage.getItem("option_adult_1")
+    const adult2 = localStorage.getItem("option_adult_2")
+
+    if (check0 === '' || check1 === '' || check2 === '' || check3 === '' || child0 === ''
+        || child1 === '' || child2 === '' || adult1 === '' || adult2 === ''){
+        return
+    }
+
+    this.setState({
+        check_0: JSON.parse(check0),
+        check_1: JSON.parse(check1),
+        check_2: JSON.parse(check2),
+        check_3: JSON.parse(check3),
+        option_children_0: JSON.parse(child0),
+        option_children_1: JSON.parse(child1),
+        option_children_2: JSON.parse(child2),
+        option_adult_1: JSON.parse(adult1),
+        option_adult_2: JSON.parse(adult2)
+    })
+}
+*/
 
 export default App
