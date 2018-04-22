@@ -292,10 +292,6 @@ class App extends Component {
                                 type="Submit">
                                 Submit
                             </Button>
-                            <Button
-                                onClick={this.handleClear.bind(this)}>
-                                Clear Values
-                            </Button>
                         </ButtonContainer>
                     </Container>
                 </div>
