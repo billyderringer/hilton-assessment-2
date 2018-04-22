@@ -231,13 +231,12 @@ class App extends Component {
                                                 <h4>Adults</h4>
                                                 <h5>(18+)</h5>
                                                 <Selector
-                                                    key={i}
                                                     name={'room'+i+'Adults'}
                                                     value={this.state['room'+i+'Adults']}
                                                     onChange={this.handleChange}
                                                 >
                                                     {this.state.adult.map(count => {
-                                                        return <Option  key={i}>{count}</Option>
+                                                        return <Option>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
@@ -245,13 +244,12 @@ class App extends Component {
                                                 <h4>Children</h4>
                                                 <h5>(0-17)</h5>
                                                 <Selector
-                                                    key={i}
                                                     name={'room'+i+'Children'}
                                                     value={this.state['room'+i+'Children']}
                                                     onChange={this.handleChange}
                                                 >
                                                     {this.state.children.map(count => {
-                                                        return <Option  key={i}>{count}</Option>
+                                                        return <Option>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
@@ -274,18 +272,18 @@ class App extends Component {
                                             <AgeFilter>
                                                 <h4>Adults</h4>
                                                 <h5>(18+)</h5>
-                                                <Selector key={i} disabled>
+                                                <Selector disabled>
                                                     {this.state.adult.map(count => {
-                                                        return <Option key={i}>{count}</Option>
+                                                        return <Option>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
                                             <AgeFilter>
                                                 <h4>Children</h4>
                                                 <h5>(0-17)</h5>
-                                                <Selector key={i} disabled>
+                                                <Selector disabled>
                                                     {this.state.children.map(count => {
-                                                        return <Option key={i}>{count}</Option>
+                                                        return <Option>{count}</Option>
                                                     })}
                                                 </Selector>
                                             </AgeFilter>
@@ -306,72 +304,5 @@ class App extends Component {
         );
     }
 }
-
-/*this.state = {
-    check_0:true,
-    check_1:false,
-    check_2:false,
-    check_3:false,
-    option_children_0:0,
-    option_children_1:1,
-    option_children_2:2,
-    option_adult_1:1,
-    option_adult_2:2,
-    rooms: [
-        {name: 'Room 1'},
-        {name: 'Room 2'},
-        {name: 'Room 3'},
-        {name: 'Room 4'}
-    ],
-    adult: [1, 2],
-    children: [0, 1, 2]
-}
-
-this.handleCheck = this.handleCheck.bind(this)
-this.handleChange = this.handleChange.bind(this)
-this.handleSubmit = this.handleSubmit.bind(this)
-}
-
-componentWillUpdate(nextProps,nextState){
-    localStorage.setItem('check_0', JSON.stringify(nextState.check_0))
-    localStorage.setItem('check_1', JSON.stringify(nextState.check_1))
-    localStorage.setItem('check_2', JSON.stringify(nextState.check_2))
-    localStorage.setItem('check_3', JSON.stringify(nextState.check_3))
-    localStorage.setItem('option_children_0', JSON.stringify(nextState.option_children_0))
-    localStorage.setItem('option_children_1', JSON.stringify(nextState.option_children_1))
-    localStorage.setItem('option_children_2', JSON.stringify(nextState.option_children_2))
-    localStorage.setItem('option_adult_1', JSON.stringify(nextState.option_adult_1))
-    localStorage.setItem('option_adult_2', JSON.stringify(nextState.option_adult_2))
-}
-
-componentDidMount(){
-    const check0 = localStorage.getItem("check_0")
-    const check1 = localStorage.getItem("check_1")
-    const check2 = localStorage.getItem("check_2")
-    const check3 = localStorage.getItem("check_3")
-    const child0 = localStorage.getItem("option_children_0")
-    const child1 = localStorage.getItem("option_children_1")
-    const child2 = localStorage.getItem("option_children_2")
-    const adult1 = localStorage.getItem("option_adult_1")
-    const adult2 = localStorage.getItem("option_adult_2")
-
-    if (check0 === '' || check1 === '' || check2 === '' || check3 === '' || child0 === ''
-        || child1 === '' || child2 === '' || adult1 === '' || adult2 === ''){
-        return
-    }
-
-    this.setState({
-        check_0: JSON.parse(check0),
-        check_1: JSON.parse(check1),
-        check_2: JSON.parse(check2),
-        check_3: JSON.parse(check3),
-        option_children_0: JSON.parse(child0),
-        option_children_1: JSON.parse(child1),
-        option_children_2: JSON.parse(child2),
-        option_adult_1: JSON.parse(adult1),
-        option_adult_2: JSON.parse(adult2)
-    })
-}
-*/
 
 export default App
